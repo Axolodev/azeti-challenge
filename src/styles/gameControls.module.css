@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  margin-top: 16px;
+  flex-direction: column;
+  padding: 0 4px;
+}
+
+.container > button:first-child {
+  margin-bottom: 8px;
+}
+
+@media only screen and (min-width: 1080px) {
+  .container {
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .container > button:first-child {
+    margin-bottom: 0;
+    margin-right: 4px;
+  }
+
+  .container > button {
+    flex: 1;
+  }
+}

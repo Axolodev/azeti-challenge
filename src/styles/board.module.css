@@ -1,7 +1,5 @@
 .container {
   display: grid;
   grid-template-columns: repeat(var(--size), 1fr);
-  max-width: 1080px;
-  margin: auto;
-  grid-auto-rows: calc((99vh - 120px) / var(--size));
+  grid-auto-rows: calc((99vh - 160px) / var(--size));
 }
