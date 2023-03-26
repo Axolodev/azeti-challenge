@@ -3,3 +3,7 @@
   text-transform: capitalize;
   overflow: hidden;
 }
+
+.victory {
+  pointer-events: none;
+}

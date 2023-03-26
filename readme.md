@@ -3,4 +3,4 @@
 ## Decisions made throughout the project
 - Changed capitalization to capitalize so words would fit better into their cells
 - Changed word-break property so words won't overflow into other cells
-- 
+- Modified button styles to use CSS Grid so they better fit into the screen

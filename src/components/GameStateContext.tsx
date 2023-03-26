@@ -35,15 +35,15 @@ export const GameStateProvider = ({ children }: React.PropsWithChildren) => {
 
 interface useGameContextReturnType
   extends Pick<GameState, "currentlySelectedWords" | "words"> {
-  // Clears all the words that the user has selected
   clearCurrentlySelectedWords: () => void;
-  // Generates a new board and clears all the words the user has selected
   generateNewBoard: () => void;
   toggleWordIndex: (index: number) => void;
+  playerWon: boolean;
 }
 
 export const useGameStateContext = (): useGameContextReturnType => {
   const currentUserContext = React.useContext(GameStateContext);
+  let playerWon = false;
 
   if (!currentUserContext) {
     throw new Error(
@@ -83,5 +83,6 @@ export const useGameStateContext = (): useGameContextReturnType => {
     clearCurrentlySelectedWords,
     generateNewBoard,
     toggleWordIndex,
+    playerWon,
   };
 };
