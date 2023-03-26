@@ -5,16 +5,17 @@ import styles from "@/styles/square.module.css";
 interface SquareProps {
   value: boolean;
   onClick: () => void;
+  word: string;
 }
 
-const Square = ({ value, onClick }: SquareProps) => {
+const Square = ({ value, onClick, word }: SquareProps) => {
   return (
     <Button
       className={styles.square}
       onClick={onClick}
       variant={value ? "contained" : "outlined"}
     >
-      Word
+      {word}
     </Button>
   );
 };

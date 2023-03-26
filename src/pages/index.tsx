@@ -1,6 +1,7 @@
 import styles from "@/styles/home.module.css";
 import React from "react";
 import Board from "@/components/Board";
+import { GameStateProvider } from "@/components/GameStateContext";
 
 function Home() {
   return (
@@ -8,7 +9,9 @@ function Home() {
       <header className={styles.header}>
         <p>Buzzword Bingo</p>
       </header>
-      <Board />
+      <GameStateProvider>
+        <Board />
+      </GameStateProvider>
     </div>
   );
 }

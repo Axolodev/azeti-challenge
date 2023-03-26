@@ -1,4 +1,5 @@
 .square {
-  height: 14vh;
-  width: 14vh;
+  word-break: break-word;
+  text-transform: capitalize;
+  overflow: hidden;
 }

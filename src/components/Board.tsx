@@ -1,34 +1,35 @@
+import { linearBoardSize, totalBoardSize } from "@/lib/config";
+import styles from "@/styles/board.module.css";
 import React from "react";
+import { useGameStateContext } from "./GameStateContext";
 import Square from "./Square";
 
 function Board() {
-  const size = 5;
-  const [squares, setSquares] = React.useState(Array(size * size).fill(false));
+  const { currentlySelectedWords, toggleWordIndex, words } =
+    useGameStateContext();
 
-  const onClick = (i: number) => {
-    const newSquares = squares.slice();
-    newSquares[i] = !newSquares[i];
-    setSquares(newSquares);
-  };
-
-  const renderSquare = (i: number) => (
-    <Square value={squares[i]} key={`square-${i}`} onClick={() => onClick(i)} />
+  const renderSquare = (index: number) => (
+    <Square
+      value={currentlySelectedWords[index]}
+      key={`square-${index}`}
+      onClick={() => toggleWordIndex(index)}
+      word={words[index]}
+    />
   );
 
-  const rows = Array(size)
+  const squares = Array(totalBoardSize)
     .fill(0)
-    .map((_, row) => {
-      const columns = Array(size)
-        .fill(0)
-        .map((_, col) => renderSquare(row * size + col));
-      return (
-        <div className="board-row" key={`row-${row}`}>
-          {columns}
-        </div>
-      );
-    });
+    .map((_, idx) => renderSquare(idx));
 
-  return <div>{rows}</div>;
+  const containerCustomProperties = {
+    "--size": linearBoardSize,
+  } as React.CSSProperties;
+
+  return (
+    <div className={styles.container} style={containerCustomProperties}>
+      {squares}
+    </div>
+  );
 }
 
 export default Board;
