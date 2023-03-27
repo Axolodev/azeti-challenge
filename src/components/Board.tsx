@@ -14,6 +14,7 @@ function Board() {
       key={`square-${index}`}
       onClick={() => toggleWordIndex(index)}
       word={words[index]}
+      index={index}
     />
   );
 

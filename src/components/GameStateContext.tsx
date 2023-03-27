@@ -1,3 +1,4 @@
+import { linearBoardSize } from "@/lib/config";
 import Dictionary from "@/lib/Dictionary";
 import getBoardWords from "@/lib/getBoardWords";
 import * as React from "react";
@@ -33,17 +34,8 @@ export const GameStateProvider = ({ children }: React.PropsWithChildren) => {
   );
 };
 
-interface useGameContextReturnType
-  extends Pick<GameState, "currentlySelectedWords" | "words"> {
-  clearCurrentlySelectedWords: () => void;
-  generateNewBoard: () => void;
-  toggleWordIndex: (index: number) => void;
-  playerWon: boolean;
-}
-
-export const useGameStateContext = (): useGameContextReturnType => {
+export const useGameStateContext = () => {
   const currentUserContext = React.useContext(GameStateContext);
-  let playerWon = false;
 
   if (!currentUserContext) {
     throw new Error(
@@ -67,6 +59,68 @@ export const useGameStateContext = (): useGameContextReturnType => {
     setCurrentlySelectedWords([]);
   }
 
+  function getIndexForVictoryRow() {
+    for (let i = 0; i < linearBoardSize; i++) {
+      let accum = true;
+
+      for (let j = 0; j < linearBoardSize; j++) {
+        accum &&= currentlySelectedWords[linearBoardSize * i + j];
+      }
+
+      if (accum) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function getIndexForVictoryColumn() {
+    for (let index = 0; index < linearBoardSize; index++) {
+      let accum = true;
+
+      for (let power = 0; power < linearBoardSize; power++) {
+        accum &&= currentlySelectedWords[linearBoardSize * power + index];
+      }
+
+      if (accum) {
+        return index;
+      }
+    }
+
+    return -1;
+  }
+
+  function checkDiagonalForVictory() {
+    let hasDiagonalVictory = true;
+
+    for (let index = 0; index < linearBoardSize; index++) {
+      hasDiagonalVictory &&=
+        currentlySelectedWords[linearBoardSize * index + index];
+    }
+
+    return hasDiagonalVictory;
+  }
+
+  function checkInverseDiagonalForVictory(): boolean {
+    let hasInverseDiagonalVictory = true;
+    for (let index = 0; index < linearBoardSize; index++) {
+      hasInverseDiagonalVictory &&=
+        currentlySelectedWords[linearBoardSize * (index + 1) - index - 1];
+    }
+    return hasInverseDiagonalVictory;
+  }
+
+  const indexForVictoryRow = getIndexForVictoryRow();
+  const indexForVictoryColumn = getIndexForVictoryColumn();
+  const hasDiagonalVictory = checkDiagonalForVictory();
+  const hasInverseDiagonalVictory = checkInverseDiagonalForVictory();
+
+  let playerWon =
+    indexForVictoryRow !== -1 ||
+    indexForVictoryColumn !== -1 ||
+    hasDiagonalVictory ||
+    hasInverseDiagonalVictory;
+
   /**
    * Adds a word index into the inner list if it does not exist, removes it if it does.
    * @param index the index to be toggled
@@ -84,5 +138,9 @@ export const useGameStateContext = (): useGameContextReturnType => {
     generateNewBoard,
     toggleWordIndex,
     playerWon,
+    indexForVictoryRow,
+    indexForVictoryColumn,
+    hasDiagonalVictory,
+    hasInverseDiagonalVictory,
   };
 };
