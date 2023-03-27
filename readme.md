@@ -1,6 +1,10 @@
 # Azeti's Buzzword Bingo
 My solution for Azeti's Buzzword Bingo
 
+## Running the project
+
+Use `npm install` to install dependencies and `npm run dev` to run the project. Additionally, you can use `npm run test` to run the tests.
+
 ## Screenshots
 
 <img src="/docs/azeti-challenge_default.png" width="300" >
