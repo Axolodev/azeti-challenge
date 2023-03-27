@@ -1,4 +1,5 @@
-.square {
+/** double class to force priority */
+.square.square {
   word-break: break-word;
   text-transform: capitalize;
   overflow: hidden;
